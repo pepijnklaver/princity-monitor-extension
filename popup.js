@@ -1,3 +1,20 @@
+/*
+ * FleetCommand - Enterprise-grade printer monitoring and workflow accelerator.
+ * Copyright (C) 2026 Pepijn Klaver
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 function escapeHTML(str) {
     if (typeof str !== 'string') return str;
     return str.replace(/[&<>'"]/g, tag => ({
@@ -709,6 +726,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             const icon = e.currentTarget.querySelector('svg');
             if(icon) icon.classList.add('spinning');
             fetchDevices(false).finally(() => { if(icon) icon.classList.remove('spinning'); });
+        });
+    }
+
+    const licenseModal = document.getElementById('licenseModal');
+    const openLicenseBtn = document.getElementById('openLicenseBtn');
+    const closeLicenseBtn = document.getElementById('closeLicenseBtn');
+
+    if (openLicenseBtn && licenseModal) {
+        openLicenseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            licenseModal.style.display = 'flex';
+            void licenseModal.offsetWidth; // Trigger reflow voor de CSS animatie
+            licenseModal.classList.add('open');
+        });
+    }
+
+    if (closeLicenseBtn && licenseModal) {
+        closeLicenseBtn.addEventListener('click', () => {
+            licenseModal.classList.remove('open');
+            setTimeout(() => licenseModal.style.display = 'none', 200);
         });
     }
 });
